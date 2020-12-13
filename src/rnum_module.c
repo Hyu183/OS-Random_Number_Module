@@ -32,8 +32,10 @@ static int dev_release(struct inode *i, struct file *f)
     int result;
 
     printk(KERN_INFO "RNM: read()\n");
+	//Tao so ngau nhien
     get_random_bytes(&result,sizeof(result));
     
+	//Tra so ngau nhien ve cho user
     if(copy_to_user(buf,&result,sizeof(result))){
         printk(KERN_ALERT "RNM: Failed to return generated number to user\n");
         return -EFAULT;
@@ -42,7 +44,7 @@ static int dev_release(struct inode *i, struct file *f)
     return 0;
 }
 
-
+//Cac thao tac muon thuc hien
  static struct file_operations pugs_fops =
 {
  .owner = THIS_MODULE,
@@ -51,9 +53,11 @@ static int dev_release(struct inode *i, struct file *f)
  .read = dev_read,
 };
 
-static int __init rnm_init(void) /* Constructor */
+//Ham duoc thuc thi nay sau khi lap module vao kernel
+static int __init rnm_init(void)
 { 
     printk(KERN_INFO "RNM: Initializing\n");
+	//Dang ky so hieu <major, minor> cho file thiet bi
     if (alloc_chrdev_region(&first, 0, 1, DEVICE_NAME) < 0)
     {
         printk(KERN_ALERT "RNM: failed to register <major, minor>\n");
@@ -61,6 +65,9 @@ static int __init rnm_init(void) /* Constructor */
     }
     printk(KERN_INFO  "<Major, Minor>: <%d, %d>\n", MAJOR(first), MINOR(first));
 
+	/*Tao file thiet bi tu dong*/
+
+	//Tao lop thiet bi
     if ((dev_class = class_create(THIS_MODULE, CLASS_NAME)) == NULL)
     {
         printk(KERN_ALERT "RNM: Failed to create device class\n");
@@ -69,6 +76,7 @@ static int __init rnm_init(void) /* Constructor */
     }
     printk(KERN_INFO "RNM: Create device class successfully\n");
 
+	//Tao thong tin <major, minor>  cho thiet bi
     if (device_create(dev_class, NULL, first, NULL, DEVICE_NAME) == NULL)
     {
         printk(KERN_ALERT "RNM: Failed to create the device \n");
@@ -90,7 +98,9 @@ static int __init rnm_init(void) /* Constructor */
     }
     return 0;
 }
-static void __exit rnm_exit(void) /* Destructor */
+
+// Ham duoc thuc thi ngay truoc khi thao module ra khoi kernel
+static void __exit rnm_exit(void) 
 {
     cdev_del(&c_dev);
     device_destroy(dev_class, first);

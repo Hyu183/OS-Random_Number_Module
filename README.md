@@ -32,5 +32,10 @@ Chạy lệnh sau đây để tháo module ra khỏi Kernel
 ```
 $ sudo rmmod rnum_module
 ```
+Dọn dẹp
+```
+$ make clean
+```
+
 ## Link Github
 Github Project của nhóm tại [đây](https://github.com/l4zyc0d3r/OS-Random_Number_Module)
