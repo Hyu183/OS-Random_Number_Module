@@ -3,8 +3,9 @@
 - Nguyễn Đại Dương - 18120168
 - Trần Quang Huy - 18120183
 ## Danh sách tính năng
-[x] Linux Kernel Module tạo ra số ngẫu nhiên
-[x] Module tạo một character device để cho phép các tiến trình ở userspace có thể open và read các số ngẫu nhiên
+- [x] Linux Kernel Module tạo ra số ngẫu nhiên
+
+- [x] Module tạo một character device để cho phép các tiến trình ở userspace có thể open và read các số ngẫu nhiên
 ## Môi trường
 - Module được lập trình và test trên Kernel phiên bản 4.15.0 (Ubuntu 16.04 LTS)
 ## Cài đặt và chạy thử
