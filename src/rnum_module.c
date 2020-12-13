@@ -1,8 +1,5 @@
 #include <linux/module.h>
-//#include <linux/version.h>
-//#include <linux/kernel.h>
 #include <linux/types.h>
-//#include <linux/kdev_t.h>
 #include <linux/fs.h>
 #include <linux/device.h>
 #include <linux/cdev.h>
@@ -36,11 +33,12 @@ static int dev_release(struct inode *i, struct file *f)
 
     printk(KERN_INFO "RNM: read()\n");
     get_random_bytes(&result,sizeof(result));
-    //printk(KERN_INFO "RNM: Generated number: %d\n", result);
+    
     if(copy_to_user(buf,&result,sizeof(result))){
+        printk(KERN_ALERT "RNM: Failed to return generated number to user\n");
         return -EFAULT;
     }
-
+    printk(KERN_INFO "RNM: Return generated number to user successfully\n");
     return 0;
 }
 
@@ -54,7 +52,7 @@ static int dev_release(struct inode *i, struct file *f)
 };
 
 static int __init rnm_init(void) /* Constructor */
-{
+{ 
     printk(KERN_INFO "RNM: Initializing\n");
     if (alloc_chrdev_region(&first, 0, 1, DEVICE_NAME) < 0)
     {
@@ -100,9 +98,11 @@ static void __exit rnm_exit(void) /* Destructor */
     unregister_chrdev_region(first, 1);
     printk(KERN_INFO "RNM: Our rnm unregistered");
 }
+
+
 module_init(rnm_init);
 module_exit(rnm_exit);
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("@18120168 @18120183");
 MODULE_DESCRIPTION("Create random number");
-MODULE_VERSION("0.1");   
+MODULE_VERSION("1.0");   

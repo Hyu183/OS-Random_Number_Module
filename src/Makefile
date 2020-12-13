@@ -5,6 +5,6 @@ all:
 	$(CC) user_test.c -o user_test
 
 clean:
-	make -C $(KDIR) M= `pwd` clean
+	make -C $(KDIR) M=`pwd` clean
 	rm user_test
 	
